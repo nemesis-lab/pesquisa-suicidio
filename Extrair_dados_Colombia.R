@@ -24,12 +24,58 @@ colombia <- function(df_choice){
 
   # FILTRA AS CAUSAS DE INTERESSE
   
-  df <- df %>% filter(str_detect(C_BAS1, "^X6|^X7|^X81|^X82|^X83|^X84"))
+  df <- df %>% filter(str_detect(C_BAS1, "^X6|^X7|^80|^X81|^X82|^X83|^X84|^Y1"))
+  
+  # QUEBRA A COLUNA "C_BAS1" E DESCARTA O TRECHO COM A DESCRIÇÃO DO CID
+  
+  df <- df %>% separate(C_BAS1, into = c('C_BAS_3_DIGITOS', 'C_BAS_DESCARTAR'), sep = 3)
+  df$C_BAS_DESCARTAR <- NULL
+  
+  # CRIA NOVA COLUNA ORGANIZANDO OS RESULTADOS PELOS CIDs
+  
+  df$CAUSA_CAT <- recode(df$C_BAS_3_DIGITOS, "X70" = "enforcamento", 
+                         "X71" = "enforcamento",
+                         "X60" = "intoxicação",
+                         "X61" = "intoxicação",
+                         "X62" = "intoxicação",
+                         "X63" = "intoxicação",
+                         "X64" = "intoxicação",
+                         "X65" = "intoxicação",
+                         "X66" = "intoxicação",
+                         "X67" = "intoxicação",
+                         "X69" = "intoxicação",
+                         "Y10" = "intoxicação",
+                         "Y11" = "intoxicação",
+                         "Y12" = "intoxicação",
+                         "Y13" = "intoxicação",
+                         "Y14" = "intoxicação",
+                         "Y15" = "intoxicação",
+                         "Y16" = "intoxicação",
+                         "Y17" = "intoxicação",
+                         "Y19" = "intoxicação",
+                         "X68" = "pesticidas",
+                         "Y18" = "pesticidas",
+                         "X72" = "armas",
+                         "X73" = "armas",
+                         "X74" = "armas",
+                         "X75" = "armas",
+                         "X76" = "armas",
+                         "X77" = "armas",
+                         "X78" = "armas",
+                         "X79" = "armas",
+                         "X80" = "altura",
+                         "X81" = "veículo",
+                         "X82" = "veículo",
+                         "X83" = "outros",
+                         "X84" = "outros")
+  
+  df$C_BAS_3_DIGITOS <- NULL
+  df$C_BAS1 <- NULL
   
   # AGRUPA OS RESULTADOS POR SEXO E CAUSA
 
   df$QT_TEMP = 1
-  df <- df %>% group_by(C_BAS1, SEXO) %>%
+  df <- df %>% group_by(CAUSA_CAT, SEXO) %>%
     summarise(QT = sum(QT_TEMP))
   
   # CRIA AS COLUNAS ANO E PAÍS
@@ -39,7 +85,7 @@ colombia <- function(df_choice){
   
   # RENOMEIA AS VARIÁVEIS
   
-  df <- df %>% rename(CAUSA = C_BAS1)
+  df <- df %>% rename(CAUSA = CAUSA_CAT)
   
   # SALVA O ARQUIVO EM CSV
   
@@ -72,24 +118,69 @@ df <- df %>% filter(gru_ed1 == "10" | gru_ed1 == "11")
 
 # FILTRA AS CAUSAS DE INTERESSE
 
-df <- df %>% filter(str_detect(c_bas1, "^X6|^X7|^X8"))
+df <- df %>% filter(str_detect(c_bas1, "^X6|^X7|^80|^X81|^X82|^X83|^X84|^Y1"))
+
+# QUEBRA A COLUNA "c_bas1" E DESCARTA O TRECHO COM A DESCRIÇÃO DO CID
+
+df <- df %>% separate(c_bas1, into = c('C_BAS_3_DIGITOS', 'C_BAS_DESCARTAR'), sep = 3)
+df$C_BAS_DESCARTAR <- NULL
+
+# CRIA NOVA COLUNA ORGANIZANDO OS RESULTADOS PELOS CIDs
+
+df$CAUSA_CAT <- recode(df$C_BAS_3_DIGITOS, "X70" = "enforcamento", 
+                       "X71" = "enforcamento",
+                       "X60" = "intoxicação",
+                       "X61" = "intoxicação",
+                       "X62" = "intoxicação",
+                       "X63" = "intoxicação",
+                       "X64" = "intoxicação",
+                       "X65" = "intoxicação",
+                       "X66" = "intoxicação",
+                       "X67" = "intoxicação",
+                       "X69" = "intoxicação",
+                       "Y10" = "intoxicação",
+                       "Y11" = "intoxicação",
+                       "Y12" = "intoxicação",
+                       "Y13" = "intoxicação",
+                       "Y14" = "intoxicação",
+                       "Y15" = "intoxicação",
+                       "Y16" = "intoxicação",
+                       "Y17" = "intoxicação",
+                       "Y19" = "intoxicação",
+                       "X68" = "pesticidas",
+                       "Y18" = "pesticidas",
+                       "X72" = "armas",
+                       "X73" = "armas",
+                       "X74" = "armas",
+                       "X75" = "armas",
+                       "X76" = "armas",
+                       "X77" = "armas",
+                       "X78" = "armas",
+                       "X79" = "armas",
+                       "X80" = "altura",
+                       "X81" = "veículo",
+                       "X82" = "veículo",
+                       "X83" = "outros",
+                       "X84" = "outros")
+
+df$C_BAS_3_DIGITOS <- NULL
+df$c_bas1 <- NULL
 
 # AGRUPA OS RESULTADOS POR SEXO E CAUSA
 
 df$QT_TEMP = 1
-df <- df %>% group_by(c_bas1, sexo) %>%
+df <- df %>% group_by(CAUSA_CAT, sexo) %>%
   summarise(QT = sum(QT_TEMP))
 
 # CRIA AS COLUNAS ANO E PAÍS
 
-df$ANO = "14"
+df$ANO = y
 df$PAIS = "Colombia"
 
 # RENOMEIA AS VARIÁVEIS
 
-df <- df %>% rename(CAUSA = c_bas1)
+df <- df %>% rename(CAUSA = CAUSA_CAT)
 df <- df %>% rename(SEXO = sexo)
-
 
 # SALVA O ARQUIVO EM CSV
 

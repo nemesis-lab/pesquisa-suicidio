@@ -28,11 +28,50 @@ argentina <- function(df_choice){
 
   # FILTRA AS CAUSAS DE INTERESSE
   
-  df <- df %>% filter(str_detect(CAUSA, "^X6|^X7|^X81|^X82|^X83|^X84"))
+  df <- df %>% filter(str_detect(CAUSA, "^X6|^X7|^80|^X81|^X82|^X83|^X84|^Y1"))
+  
+  # CRIA NOVA COLUNA ORGANIZANDO OS RESULTADOS PELOS CIDs
+  
+  df$CAUSA_CAT <- recode(df$CAUSA, "X70" = "enforcamento", 
+                         "X71" = "enforcamento",
+                         "X60" = "intoxicação",
+                         "X61" = "intoxicação",
+                         "X62" = "intoxicação",
+                         "X63" = "intoxicação",
+                         "X64" = "intoxicação",
+                         "X65" = "intoxicação",
+                         "X66" = "intoxicação",
+                         "X67" = "intoxicação",
+                         "X69" = "intoxicação",
+                         "Y10" = "intoxicação",
+                         "Y11" = "intoxicação",
+                         "Y12" = "intoxicação",
+                         "Y13" = "intoxicação",
+                         "Y14" = "intoxicação",
+                         "Y15" = "intoxicação",
+                         "Y16" = "intoxicação",
+                         "Y17" = "intoxicação",
+                         "Y19" = "intoxicação",
+                         "X68" = "pesticidas",
+                         "Y18" = "pesticidas",
+                         "X72" = "armas",
+                         "X73" = "armas",
+                         "X74" = "armas",
+                         "X75" = "armas",
+                         "X76" = "armas",
+                         "X77" = "armas",
+                         "X78" = "armas",
+                         "X79" = "armas",
+                         "X80" = "altura",
+                         "X81" = "veículo",
+                         "X82" = "veículo",
+                         "X83" = "outros",
+                         "X84" = "outros")
+  df$CAUSA <- NULL
   
   # AGRUPA OS RESULTADOS POR SEXO E CAUSA
   
-  df <- df %>% group_by(CAUSA, SEXO) %>%
+  df <- df %>% group_by(CAUSA_CAT, SEXO) %>%
     summarise(QT = sum(CUENTA))
   
   # CRIA AS COLUNAS ANO E PAÍS

@@ -18,6 +18,46 @@ fem <- read_delim("C:/Users/Carlos Garcia Filho/Desktop/Comparativo - Brasil, Ar
 brasil_F <- separate(fem, col = `Categoria CID10`, into = c("CAUSA","DESCARTAR"), sep = "   ")
 brasil_F$DESCARTAR <- NULL
 
+# AGRUPA OS CIDs EM CATEGORIAS E DESCARTA A COLUNA COM OS CIDs
+
+brasil_F$CAUSA_CAT <- recode(brasil_F$CAUSA, 
+                       "X70" = "enforcamento", 
+                       "X71" = "enforcamento",
+                       "X60" = "intoxicação",
+                       "X61" = "intoxicação",
+                       "X62" = "intoxicação",
+                       "X63" = "intoxicação",
+                       "X64" = "intoxicação",
+                       "X65" = "intoxicação",
+                       "X66" = "intoxicação",
+                       "X67" = "intoxicação",
+                       "X69" = "intoxicação",
+                       "Y10" = "intoxicação",
+                       "Y11" = "intoxicação",
+                       "Y12" = "intoxicação",
+                       "Y13" = "intoxicação",
+                       "Y14" = "intoxicação",
+                       "Y15" = "intoxicação",
+                       "Y16" = "intoxicação",
+                       "Y17" = "intoxicação",
+                       "Y19" = "intoxicação",
+                       "X68" = "pesticidas",
+                       "Y18" = "pesticidas",
+                       "X72" = "armas",
+                       "X73" = "armas",
+                       "X74" = "armas",
+                       "X75" = "armas",
+                       "X76" = "armas",
+                       "X77" = "armas",
+                       "X78" = "armas",
+                       "X79" = "armas",
+                       "X80" = "altura",
+                       "X81" = "veículo",
+                       "X82" = "veículo",
+                       "X83" = "outros",
+                       "X84" = "outros")
+brasil_F$CAUSA <- NULL
+
 # FUNÇÃO PARA SEPARAR OS DADOS DO BRASIL SEXO FEMININO
 
 brasil_feminino <- function(ano, df_choice){
@@ -27,11 +67,20 @@ brasil_feminino <- function(ano, df_choice){
   
   # SELECIONA O ANO
   
-  df <- df %>%  select(CAUSA, y)
+  df <- df %>%  select(CAUSA_CAT, y)
   
   # RETIRA AS LINHAS QUE ESTÃO COM N/A
   
   df <- df[complete.cases(df), ]
+  
+  # RENOMEIA A COLUNA Y
+  
+  df <- df %>% rename(QT_TEMP = y)
+  
+  # AGRUPA OS RESULTADOS POR SEXO E CAUSA
+  
+  df <- df %>% group_by(CAUSA_CAT) %>%
+    summarise(QT = sum(QT_TEMP))
   
   # CRIA COLUNAS COM ANO, PAIS E SEXO
   
@@ -39,15 +88,11 @@ brasil_feminino <- function(ano, df_choice){
   df$PAIS = "Brasil"
   df$SEXO= "2"
   
-  # RENOMEIA COLUNA QT
-  
-  df <- df %>% rename(QT = y)
-  
   # SALVA ARQUIVO
   
   file_name_final <- paste("C:/Users/Carlos Garcia Filho/Desktop/Comparativo - Brasil, Argentina e Colômbia/Brasil/",as.character(y),"_BR_F.csv", sep = "") 
   write.csv(df, file_name_final, row.names = FALSE)
-
+  
 }
   
 # CHAMA A FUNÇÃO
@@ -79,6 +124,46 @@ masc <- read_delim("C:/Users/Carlos Garcia Filho/Desktop/Comparativo - Brasil, A
 brasil_M <- separate(masc, col = `Categoria CID10`, into = c("CAUSA","DESCARTAR"), sep = "   ")
 brasil_M$DESCARTAR <- NULL
 
+# AGRUPA OS CIDs EM CATEGORIAS E DESCARTA A COLUNA COM OS CIDs
+
+brasil_M$CAUSA_CAT <- recode(brasil_M$CAUSA, 
+                             "X70" = "enforcamento", 
+                             "X71" = "enforcamento",
+                             "X60" = "intoxicação",
+                             "X61" = "intoxicação",
+                             "X62" = "intoxicação",
+                             "X63" = "intoxicação",
+                             "X64" = "intoxicação",
+                             "X65" = "intoxicação",
+                             "X66" = "intoxicação",
+                             "X67" = "intoxicação",
+                             "X69" = "intoxicação",
+                             "Y10" = "intoxicação",
+                             "Y11" = "intoxicação",
+                             "Y12" = "intoxicação",
+                             "Y13" = "intoxicação",
+                             "Y14" = "intoxicação",
+                             "Y15" = "intoxicação",
+                             "Y16" = "intoxicação",
+                             "Y17" = "intoxicação",
+                             "Y19" = "intoxicação",
+                             "X68" = "pesticidas",
+                             "Y18" = "pesticidas",
+                             "X72" = "armas",
+                             "X73" = "armas",
+                             "X74" = "armas",
+                             "X75" = "armas",
+                             "X76" = "armas",
+                             "X77" = "armas",
+                             "X78" = "armas",
+                             "X79" = "armas",
+                             "X80" = "altura",
+                             "X81" = "veículo",
+                             "X82" = "veículo",
+                             "X83" = "outros",
+                             "X84" = "outros")
+brasil_M$CAUSA <- NULL
+
 # FUNÇÃO PARA SEPARAR OS DADOS DO BRASIL SEXO MASCULINO
 
 brasil_masculino <- function(ano, df_choice){
@@ -88,22 +173,27 @@ brasil_masculino <- function(ano, df_choice){
   
   # SELECIONA O ANO
   
-  df <- df %>%  select(CAUSA, y)
+  df <- df %>%  select(CAUSA_CAT, y)
   
   # RETIRA AS LINHAS QUE ESTÃO COM N/A
   
   df <- df[complete.cases(df), ]
+  
+  # RENOMEIA A COLUNA Y
+  
+  df <- df %>% rename(QT_TEMP = y)
+  
+  # AGRUPA OS RESULTADOS POR SEXO E CAUSA
+  
+  df <- df %>% group_by(CAUSA_CAT) %>%
+    summarise(QT = sum(QT_TEMP))
   
   # CRIA COLUNAS COM ANO, PAIS E SEXO
   
   df$ANO = y
   df$PAIS = "Brasil"
   df$SEXO= "1"
-  
-  # RENOMEIA COLUNA QT
-  
-  df <- df %>% rename(QT = y)
-  
+
   # SALVA ARQUIVO
   
   file_name_final <- paste("C:/Users/Carlos Garcia Filho/Desktop/Comparativo - Brasil, Argentina e Colômbia/Brasil/",as.character(y),"_BR_M.csv", collapse = NULL) 
@@ -125,7 +215,7 @@ brasil_masculino(2017, brasil_M)
 brasil_masculino(2018, brasil_M)
 
 
-
+# AMDG
 
 
 
