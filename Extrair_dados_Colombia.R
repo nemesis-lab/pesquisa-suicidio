@@ -35,24 +35,24 @@ colombia <- function(df_choice){
   
   df$CAUSA_CAT <- recode(df$C_BAS_3_DIGITOS, "X70" = "enforcamento", 
                          "X71" = "enforcamento",
-                         "X60" = "intoxicação",
-                         "X61" = "intoxicação",
-                         "X62" = "intoxicação",
-                         "X63" = "intoxicação",
-                         "X64" = "intoxicação",
-                         "X65" = "intoxicação",
-                         "X66" = "intoxicação",
-                         "X67" = "intoxicação",
-                         "X69" = "intoxicação",
-                         "Y10" = "intoxicação",
-                         "Y11" = "intoxicação",
-                         "Y12" = "intoxicação",
-                         "Y13" = "intoxicação",
-                         "Y14" = "intoxicação",
-                         "Y15" = "intoxicação",
-                         "Y16" = "intoxicação",
-                         "Y17" = "intoxicação",
-                         "Y19" = "intoxicação",
+                         "X60" = "intoxicacao",
+                         "X61" = "intoxicacao",
+                         "X62" = "intoxicacao",
+                         "X63" = "intoxicacao",
+                         "X64" = "intoxicacao",
+                         "X65" = "intoxicacao",
+                         "X66" = "intoxicacao",
+                         "X67" = "intoxicacao",
+                         "X69" = "intoxicacao",
+                         "Y10" = "intoxicacao",
+                         "Y11" = "intoxicacao",
+                         "Y12" = "intoxicacao",
+                         "Y13" = "intoxicacao",
+                         "Y14" = "intoxicacao",
+                         "Y15" = "intoxicacao",
+                         "Y16" = "intoxicacao",
+                         "Y17" = "intoxicacao",
+                         "Y19" = "intoxicacao",
                          "X68" = "pesticidas",
                          "Y18" = "pesticidas",
                          "X72" = "armas",
@@ -64,8 +64,8 @@ colombia <- function(df_choice){
                          "X78" = "armas",
                          "X79" = "armas",
                          "X80" = "altura",
-                         "X81" = "veículo",
-                         "X82" = "veículo",
+                         "X81" = "veiculo",
+                         "X82" = "veiculo",
                          "X83" = "outros",
                          "X84" = "outros")
   
@@ -82,10 +82,6 @@ colombia <- function(df_choice){
   
   df$ANO = y
   df$PAIS = "Colombia"
-  
-  # RENOMEIA AS VARIÁVEIS
-  
-  df <- df %>% rename(CAUSA = CAUSA_CAT)
   
   # SALVA O ARQUIVO EM CSV
   
@@ -129,24 +125,24 @@ df$C_BAS_DESCARTAR <- NULL
 
 df$CAUSA_CAT <- recode(df$C_BAS_3_DIGITOS, "X70" = "enforcamento", 
                        "X71" = "enforcamento",
-                       "X60" = "intoxicação",
-                       "X61" = "intoxicação",
-                       "X62" = "intoxicação",
-                       "X63" = "intoxicação",
-                       "X64" = "intoxicação",
-                       "X65" = "intoxicação",
-                       "X66" = "intoxicação",
-                       "X67" = "intoxicação",
-                       "X69" = "intoxicação",
-                       "Y10" = "intoxicação",
-                       "Y11" = "intoxicação",
-                       "Y12" = "intoxicação",
-                       "Y13" = "intoxicação",
-                       "Y14" = "intoxicação",
-                       "Y15" = "intoxicação",
-                       "Y16" = "intoxicação",
-                       "Y17" = "intoxicação",
-                       "Y19" = "intoxicação",
+                       "X60" = "intoxicacao",
+                       "X61" = "intoxicacao",
+                       "X62" = "intoxicacao",
+                       "X63" = "intoxicacao",
+                       "X64" = "intoxicacao",
+                       "X65" = "intoxicacao",
+                       "X66" = "intoxicacao",
+                       "X67" = "intoxicacao",
+                       "X69" = "intoxicacao",
+                       "Y10" = "intoxicacao",
+                       "Y11" = "intoxicacao",
+                       "Y12" = "intoxicacao",
+                       "Y13" = "intoxicacao",
+                       "Y14" = "intoxicacao",
+                       "Y15" = "intoxicacao",
+                       "Y16" = "intoxicacao",
+                       "Y17" = "intoxicacao",
+                       "Y19" = "intoxicacao",
                        "X68" = "pesticidas",
                        "Y18" = "pesticidas",
                        "X72" = "armas",
@@ -158,8 +154,8 @@ df$CAUSA_CAT <- recode(df$C_BAS_3_DIGITOS, "X70" = "enforcamento",
                        "X78" = "armas",
                        "X79" = "armas",
                        "X80" = "altura",
-                       "X81" = "veículo",
-                       "X82" = "veículo",
+                       "X81" = "veiculo",
+                       "X82" = "veiculo",
                        "X83" = "outros",
                        "X84" = "outros")
 
@@ -174,12 +170,11 @@ df <- df %>% group_by(CAUSA_CAT, sexo) %>%
 
 # CRIA AS COLUNAS ANO E PAÍS
 
-df$ANO = y
+df$ANO = "2014"
 df$PAIS = "Colombia"
 
 # RENOMEIA AS VARIÁVEIS
 
-df <- df %>% rename(CAUSA = CAUSA_CAT)
 df <- df %>% rename(SEXO = sexo)
 
 # SALVA O ARQUIVO EM CSV
