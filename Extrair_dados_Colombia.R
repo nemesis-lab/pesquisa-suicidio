@@ -170,7 +170,7 @@ df <- df %>% group_by(CAUSA_CAT, sexo) %>%
 
 # CRIA AS COLUNAS ANO E PAÍS
 
-df$ANO = "2014"
+df$ANO = "14"
 df$PAIS = "Colombia"
 
 # RENOMEIA AS VARIÁVEIS

@@ -1,6 +1,7 @@
 library(dplyr)
 library(tidyverse)
 library(readr)
+library(stringr)
 
 # ABRE O ARQUIVO DO BANCO FEMININO
 
@@ -83,7 +84,8 @@ brasil_feminino <- function(ano, df_choice){
   
   # CRIA COLUNAS COM ANO, PAIS E SEXO
   
-  df$ANO = y
+  a <- unlist(str_split(y, "20", 2))[2]
+  df$ANO = a
   df$PAIS = "Brasil"
   df$SEXO= "2"
   
@@ -188,7 +190,8 @@ brasil_masculino <- function(ano, df_choice){
   
   # CRIA COLUNAS COM ANO, PAIS E SEXO
   
-  df$ANO = y
+  a <- unlist(str_split(y, "20", 2))[2]
+  df$ANO = a
   df$PAIS = "Brasil"
   df$SEXO= "1"
 
